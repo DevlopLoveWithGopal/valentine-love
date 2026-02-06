@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Special ❤️</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+/* Background */
+.container {
+  background: url("bg.png") no-repeat center center;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+/* Overlay */
+.overlay {
+  background: rgba(0,0,0,0.45);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Popup */
+.popup {
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 340px;
+  width: 100%;
+  animation: zoom 0.5s ease;
+}
+
+@keyframes zoom {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.popup h2 { color: crimson; }
+
+.popup button {
+  margin: 10px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.yes { background: crimson; color: #fff; }
+.no { background: gray; color: #fff; }
+
+/* Proposal */
+.proposal {
+  display: none;
+  text-align: center;
+  color: white;
+  animation: zoom 0.5s ease;
+}
+
+.ring-box {
+  position: relative;
+  display: inline-block;
+}
+
+.ring-box img {
+  width: 180px;
+  margin: 20px 0;
+  animation: ringZoom 2s infinite alternate;
+  filter: drop-shadow(0 0 18px gold);
+}
+
+@keyframes ringZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); }
+}
+
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #fff, gold);
+  border-radius: 50%;
+  animation: sparkle 1.5s infinite;
+}
+
+@keyframes sparkle {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+/* Roses */
+.rose {
+  position: fixed;
+  top: -40px;
+  font-size: 26px;
+  animation: fall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="overlay">
+
+    <!-- POPUP -->
+    <div class="popup" id="popup">
+      <h2>💖 Valentine Day Special 💖</h2>
+      <p><b>Will you be my Valentine?</b> 🌹</p>
+      <button class="yes" onclick="yesClicked()">Yes 💕</button>
+      <button class="no" onclick="alert('Ek baar phir soch lo 😜')">No 😢</button>
+    </div>
+
+    <!-- PROPOSAL -->
+    <div class="proposal" id="proposal">
+      <h1 id="yesText">Said YES 💍❤️</h1>
+
+      <div class="ring-box">
+        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e" alt="Diamond Ring">
+      </div>
+
+      <p>
+        I Love You Deeksha ❤️<br>
+        From this moment till forever,<br>
+        my heart belongs only to you 💕
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- MUSIC (local file) -->
+<audio id="music" loop>
+  <source src="kesariya.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* CHANGE THIS ONLY */
+const partnerGender = "male"; 
+// options: "female" | "male" | "neutral"
+
+function yesClicked() {
+  document.getElementById("popup").style.display = "none";
+  document.getElementById("proposal").style.display = "block";
+  document.getElementById("music").play();
+
+  const yesText = document.getElementById("yesText");
+
+  if (partnerGender === "female") {
+    yesText.innerText = "She Said YES 💍❤️";
+  } else if (partnerGender === "male") {
+    yesText.innerText = "He Said YES 💍❤️";
+  } else {
+    yesText.innerText = "We Said YES 💍❤️";
+  }
+
+  setInterval(createRose, 300);
+  startSparkles();
+}
+
+function createRose() {
+  const rose = document.createElement("div");
+  rose.className = "rose";
+  rose.innerHTML = "🌹";
+  rose.style.left = Math.random() * 100 + "vw";
+  rose.style.animationDuration = (3 + Math.random() * 4) + "s";
+  document.body.appendChild(rose);
+
+  setTimeout(() => rose.remove(), 7000);
+}
+
+function startSparkles() {
+  const ringBox = document.querySelector(".ring-box");
+  setInterval(() => {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.top = Math.random() * 100 + "%";
+    ringBox.appendChild(s);
+    setTimeout(() => s.remove(), 1500);
+  }, 200);
+}
+</script>
+
+</body>
+</html>
