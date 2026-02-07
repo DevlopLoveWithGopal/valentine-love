@@ -6,8 +6,6 @@
 <title>Valentine Special ❤️</title>
 
 <style>
-* { box-sizing: border-box; }
-
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -15,31 +13,30 @@ body {
 }
 
 /* Background */
-.container {
-  background: url("bg.png") no-repeat center center;
+.mobile {
+  background-image: url("bg.png");
   background-size: cover;
+  background-position: center;
   min-height: 100vh;
   width: 100vw;
 }
 
-/* Overlay */
 .overlay {
   background: rgba(0,0,0,0.45);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
 }
 
 /* Popup */
 .popup {
-  background: #fff;
+  background: white;
   padding: 25px;
   border-radius: 20px;
   text-align: center;
-  max-width: 340px;
-  width: 100%;
+  width: 85%;
+  max-width: 320px;
   animation: zoom 0.5s ease;
 }
 
@@ -48,34 +45,38 @@ body {
   to { transform: scale(1); opacity: 1; }
 }
 
-.popup h2 { color: crimson; }
+.popup h2 {
+  color: crimson;
+}
 
 .popup button {
   margin: 10px;
-  padding: 10px 22px;
+  padding: 10px 25px;
   border: none;
   border-radius: 25px;
   font-size: 16px;
   cursor: pointer;
 }
 
-.yes { background: crimson; color: #fff; }
-.no { background: gray; color: #fff; }
+.yes {
+  background: crimson;
+  color: white;
+}
+
+.no {
+  background: gray;
+  color: white;
+}
 
 /* Proposal */
 .proposal {
   display: none;
   text-align: center;
   color: white;
-  animation: zoom 0.5s ease;
+  padding: 20px;
 }
 
-.ring-box {
-  position: relative;
-  display: inline-block;
-}
-
-.ring-box img {
+.proposal img {
   width: 180px;
   margin: 20px 0;
   animation: ringZoom 2s infinite alternate;
@@ -84,7 +85,19 @@ body {
 
 @keyframes ringZoom {
   from { transform: scale(1); }
-  to { transform: scale(1.12); }
+  to { transform: scale(1.1); }
+}
+
+/* Roses */
+.rose {
+  position: fixed;
+  top: -50px;
+  font-size: 26px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); }
 }
 
 /* Sparkles */
@@ -92,35 +105,21 @@ body {
   position: absolute;
   width: 6px;
   height: 6px;
-  background: radial-gradient(circle, #fff, gold);
+  background: gold;
   border-radius: 50%;
   animation: sparkle 1.5s infinite;
 }
 
 @keyframes sparkle {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
-
-/* Roses */
-.rose {
-  position: fixed;
-  top: -40px;
-  font-size: 26px;
-  animation: fall linear infinite;
-  pointer-events: none;
-}
-
-@keyframes fall {
-  to { transform: translateY(110vh); }
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="mobile">
   <div class="overlay">
 
     <!-- POPUP -->
@@ -128,44 +127,44 @@ body {
       <h2>💖 Valentine Day Special 💖</h2>
       <p><b>Will you be my Valentine?</b> 🌹</p>
       <button class="yes" onclick="yesClicked()">Yes 💕</button>
-      <button class="no" onclick="alert('Ek baar phir soch lo 😜')">No 😢</button>
+      <button class="no" onclick="alert('Soch lo dobara 😜')">No 😢</button>
     </div>
 
     <!-- PROPOSAL -->
     <div class="proposal" id="proposal">
-      <h1 id="yesText">Said YES 💍❤️</h1>
+      <h1 id="yesText">We Said YES 💍❤️</h1>
 
-      <div class="ring-box">
-        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e" alt="Diamond Ring">
-      </div>
+      <img id="ring" src="https://images.unsplash.com/photo-1605100804763-247f67b3557e" alt="Ring">
 
       <p>
-        I Love You Deeksha ❤️<br>
         From this moment till forever,<br>
-        my heart belongs only to you 💕
+        my heart belongs only to you 💕<br>
+        Let our love shine brighter every day ✨
       </p>
     </div>
 
   </div>
 </div>
 
-<!-- MUSIC (local file) -->
-<audio id="music" loop>
-  <source src="kesariya.mp3" type="audio/mpeg">
-</audio>
+<!-- Hidden YouTube Music -->
+<iframe
+  id="ytMusic"
+  width="0"
+  height="0"
+  src=""
+  allow="autoplay"
+  style="display:none;">
+</iframe>
 
 <script>
-/* CHANGE THIS ONLY */
-const partnerGender = "male"; 
-// options: "female" | "male" | "neutral"
+// CHANGE THIS IF NEEDED: "female" | "male" | "neutral"
+const partnerGender = "female";
 
 function yesClicked() {
   document.getElementById("popup").style.display = "none";
   document.getElementById("proposal").style.display = "block";
-  document.getElementById("music").play();
 
   const yesText = document.getElementById("yesText");
-
   if (partnerGender === "female") {
     yesText.innerText = "She Said YES 💍❤️";
   } else if (partnerGender === "male") {
@@ -173,6 +172,10 @@ function yesClicked() {
   } else {
     yesText.innerText = "We Said YES 💍❤️";
   }
+
+  // Play Kesariya (YouTube – always works)
+  document.getElementById("ytMusic").src =
+    "https://www.youtube.com/embed/BddP6PYo2gs?autoplay=1";
 
   setInterval(createRose, 300);
   startSparkles();
@@ -185,19 +188,19 @@ function createRose() {
   rose.style.left = Math.random() * 100 + "vw";
   rose.style.animationDuration = (3 + Math.random() * 4) + "s";
   document.body.appendChild(rose);
-
   setTimeout(() => rose.remove(), 7000);
 }
 
 function startSparkles() {
-  const ringBox = document.querySelector(".ring-box");
+  const ring = document.getElementById("ring");
   setInterval(() => {
-    const s = document.createElement("div");
-    s.className = "sparkle";
-    s.style.left = Math.random() * 100 + "%";
-    s.style.top = Math.random() * 100 + "%";
-    ringBox.appendChild(s);
-    setTimeout(() => s.remove(), 1500);
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    const rect = ring.getBoundingClientRect();
+    sparkle.style.left = rect.left + Math.random() * rect.width + "px";
+    sparkle.style.top = rect.top + Math.random() * rect.height + "px";
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 1500);
   }, 200);
 }
 </script>
